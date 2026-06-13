@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tell Us More | Star Electrical</title>
+<meta name="description" content="Private feedback for Star Electrical — help us put it right." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0f1c'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='%23f5a623' font-family='Arial'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="nav scrolled">
+  <div class="container nav-inner">
+    <a href="index.html" class="brand"><span class="spark">⚡</span>Star Electrical</a>
+    <nav class="nav-links">
+      <a class="btn btn-primary nav-cta" href="tel:+64275456863">Call 027 545 6863</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow">We're listening</span>
+    <h1>Help us put it right</h1>
+    <p>Thanks for being honest. Tell us what happened and we'll do our best to sort it. This goes straight to the team — it won't be posted publicly.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div style="max-width:620px;margin:0 auto">
+      <form class="form" id="pform" action="https://formsubmit.co/starelectrical@xtra.co.nz" method="POST">
+        <input type="hidden" name="_subject" value="Private feedback — Star Electrical" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_template" value="table" />
+        <div class="row">
+          <div class="field"><label for="name">Name</label><input id="name" name="name" type="text" placeholder="Your name" required /></div>
+          <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" placeholder="you@email.co.nz" required /></div>
+        </div>
+        <div class="field">
+          <label for="rating">Your rating</label>
+          <input id="rating" name="rating" type="text" readonly value="" />
+        </div>
+        <div class="field"><label for="feedback">What could we have done better?</label><textarea id="feedback" name="feedback" placeholder="Tell us what happened..." required></textarea></div>
+        <button type="submit" class="btn btn-primary">Send feedback →</button>
+        <p class="form-note">Goes directly to Star Electrical. We genuinely appreciate it.</p>
+      </form>
+
+      <div id="thanks" style="display:none;text-align:center;padding:40px 0">
+        <div style="font-size:3rem">✅</div>
+        <h2 style="font-family:'Sora',sans-serif;margin:14px 0 10px">Thank you</h2>
+        <p style="color:var(--ink-soft)">Your feedback's been sent. We'll be in touch to make things right.</p>
+        <a href="index.html" class="btn btn-dark" style="margin-top:20px">Back to home</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom" style="border:0;padding-top:0">
+      <span>© <span id="yr">2026</span> Star Electrical. Christchurch, NZ.</span>
+      <span><a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Pre-fill rating from URL
+  var params = new URLSearchParams(window.location.search);
+  var r = params.get("rating");
+  var ratingField = document.getElementById("rating");
+  if (r && /^[1-5]$/.test(r)) { ratingField.value = r + " out of 5 stars"; }
+  else { ratingField.value = "Not specified"; }
+
+  // Success state (FormSubmit AJAX so we can show inline thanks)
+  var form = document.getElementById("pform");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var data = new FormData(form);
+    fetch("https://formsubmit.co/ajax/starelectrical@xtra.co.nz", {
+      method: "POST",
+      headers: { "Accept": "application/json" },
+      body: data
+    }).then(function () { showThanks(); }).catch(function () { showThanks(); });
+  });
+  function showThanks() {
+    form.style.display = "none";
+    document.getElementById("thanks").style.display = "block";
+  }
+  document.getElementById("yr").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
